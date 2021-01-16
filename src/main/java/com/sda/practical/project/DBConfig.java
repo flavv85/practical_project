@@ -1,3 +1,5 @@
+package com.sda.practical.project;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
