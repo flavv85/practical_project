@@ -8,6 +8,7 @@
     <artifactId>11_Practical_Project</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+
     <dependencies>
         <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
         <dependency>
