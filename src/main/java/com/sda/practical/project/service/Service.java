@@ -53,7 +53,8 @@ public class Service {
 
     public boolean login(String username, String pin) {
 
-        if (currentUser !=null){
+        if (currentUser != null) {
+            System.out.println("Deja sunteti autentificat cu utilizatorul: " + currentUser);
             return false;
         }
 
@@ -62,6 +63,15 @@ public class Service {
             return false;
         }
         currentUser = username;
+        return true;
+    }
+
+    public boolean logout(String username) {
+        if (currentUser == null) {
+            return false;
+        }
+        currentUser = username;
+        currentUser = null;
         return true;
     }
 
