@@ -2,17 +2,44 @@ package com.sda.practical.project;
 
 import com.sda.practical.project.dao.AccountsDao;
 import com.sda.practical.project.dao.UsersDao;
+import com.sda.practical.project.service.Service;
 import org.hibernate.SessionFactory;
+
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
+        Service service = new Service();
 
-        DBConfig dbConfig = new DBConfig();
+        String command = "";
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\n--------------\nEnter command: \n- LOGIN: login username pin\n- EXIT: exit");
+        while (!command.equals("exit")) {
+            command = scanner.next();
+            if (command.equals("login")) {
+                String username = scanner.next();
+                String pin = scanner.next();
 
-        SessionFactory sessionFactory = dbConfig.getSessionFactory();
-        UsersDao usersDao = new UsersDao(sessionFactory);
-        AccountsDao accountsDao = new AccountsDao(sessionFactory);
+                boolean success = service.login(username, pin);
+                if (success){
+                    System.out.println("\n--------------------------------------");
+                    System.out.println("Autentificarea s-a realizat cu succes!");
+                    System.out.println("Puteti realiza urmatoarele operatiuni:\n- accounts - vizualizare " +
+                            "conturi\n- add - adauga un cont nou\n- deposit - depuneti bani\n- withdraw - eliberare " +
+                            "numerar\n- transfer - transfera bani dintr-un cont in altul (implica conversie)\n- " +
+                            "LOGOUT - logout username\n- " +
+                            "EXIT - enter 'exit' to leave app");
+                }else{
+                    System.out.println("\n------------------");
+                    System.out.println("A aparut o eroare!\nReintroduceti login username si pin...\nsau introduceti " +
+                            "'exit' " +
+                            "pentru a parasi aplicatia.");
+                }
+
+
+            }
+        }
 
     }
 }

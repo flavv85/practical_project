@@ -11,7 +11,7 @@ public class UsersModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private String password;
+    private String pin;
 
     public int getId() {
         return id;
@@ -29,11 +29,11 @@ public class UsersModel {
         this.name = name;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPin() {
+        return pin;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPin(String pin) {
+        this.pin = pin;
     }
 }

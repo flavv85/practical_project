@@ -28,5 +28,41 @@ package com.sda.practical.project.service;
 
          */
 
+import com.sda.practical.project.DBConfig;
+import com.sda.practical.project.dao.AccountsDao;
+import com.sda.practical.project.dao.UsersDao;
+import com.sda.practical.project.model.UsersModel;
+import org.hibernate.SessionFactory;
+
 public class Service {
+
+    private DBConfig dbConfig;
+    SessionFactory sessionFactory;
+    UsersDao usersDao;
+    AccountsDao accountsDao;
+
+    private String currentUser;
+
+    public Service() {
+        dbConfig = new DBConfig();
+        sessionFactory = dbConfig.getSessionFactory();
+        usersDao = new UsersDao(sessionFactory);
+        accountsDao = new AccountsDao(sessionFactory);
+    }
+
+
+    public boolean login(String username, String pin) {
+
+        if (currentUser !=null){
+            return false;
+        }
+
+        UsersModel usersModel = usersDao.getUserByUserName(username);
+        if (!pin.equals(usersModel.getPin())) {
+            return false;
+        }
+        currentUser = username;
+        return true;
+    }
+
 }

@@ -12,7 +12,7 @@ public class AccountsModel {
     private int id;
     private int userId;
     private String currency;
-    private int amount;
+    private double amount;
 
     public int getId() {
         return id;
@@ -38,7 +38,7 @@ public class AccountsModel {
         this.currency = currency;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
