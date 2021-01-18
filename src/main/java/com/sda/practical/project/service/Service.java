@@ -31,17 +31,22 @@ package com.sda.practical.project.service;
 import com.sda.practical.project.DBConfig;
 import com.sda.practical.project.dao.AccountsDao;
 import com.sda.practical.project.dao.UsersDao;
+import com.sda.practical.project.model.AccountsModel;
 import com.sda.practical.project.model.UsersModel;
 import org.hibernate.SessionFactory;
+
+import java.util.Collections;
+import java.util.List;
 
 public class Service {
 
     private DBConfig dbConfig;
-    SessionFactory sessionFactory;
-    UsersDao usersDao;
-    AccountsDao accountsDao;
+    private SessionFactory sessionFactory;
+    private UsersDao usersDao;
+    private AccountsDao accountsDao;
 
     private String currentUser;
+    private int currentId;
 
     public Service() {
         dbConfig = new DBConfig();
@@ -50,9 +55,8 @@ public class Service {
         accountsDao = new AccountsDao(sessionFactory);
     }
 
-
+    // login
     public boolean login(String username, String pin) {
-
         if (currentUser != null) {
             System.out.println("Deja sunteti autentificat cu utilizatorul: " + currentUser);
             return false;
@@ -66,13 +70,49 @@ public class Service {
         return true;
     }
 
-    public boolean logout(String username) {
+    // logout
+    public boolean logout() {
         if (currentUser == null) {
             return false;
         }
-        currentUser = username;
         currentUser = null;
         return true;
     }
+
+    // list accounts
+
+    public List<AccountsModel> getAccountsForLoggedUser() {
+        if (currentUser == null) {
+//            System.out.println("Nici un user nu este logat!");
+            return Collections.emptyList();
+        }
+        UsersModel usersModel = usersDao.getUserByUserName(currentUser);
+        int id = usersModel.getId();
+        return accountsDao.findAllAccountsById(id);
+    }
+
+    public void accountDeposit(int accountId, double amount, String currency) {
+        UsersModel usersModel = usersDao.getUserByUserName(currentUser);
+        int id = usersModel.getId();
+
+        AccountsModel accountsModel = new AccountsModel();
+        accountsModel.setUserId(id);
+
+        accountsModel.setId(accountId);
+        double currentAmount = accountsModel.getAmount();
+        accountsModel.setAmount(currentAmount + amount);
+        accountsModel.setCurrency(currency);
+
+        accountsDao.updateAccount(accountsModel);
+    }
+/*
+- de luat toate conturile utilizatorului curent cu metoda de mai sus (list accounts)
+- selectez contul in care vreau sa depun (.get....) - account model
+- .setamount de getamount + amount
+sout ca s -a depus, sau ca nu se poate
+- apelam medota din DAO cu updateAccount(
+
+
+ */
 
 }

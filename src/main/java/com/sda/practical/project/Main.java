@@ -1,10 +1,9 @@
 package com.sda.practical.project;
 
-import com.sda.practical.project.dao.AccountsDao;
-import com.sda.practical.project.dao.UsersDao;
+import com.sda.practical.project.model.AccountsModel;
 import com.sda.practical.project.service.Service;
-import org.hibernate.SessionFactory;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -39,9 +38,7 @@ public class Main {
                 }
             }
             if (command.equals("logout")) {
-                String username = scanner.next();
-
-                boolean success = service.logout(username);
+                boolean success = service.logout();
                 if (success) {
                     System.out.println("\nV-ati delogat!\n--------------\nEnter command: \n- LOGIN: login username " +
                             "pin\n- EXIT: exit");
@@ -50,6 +47,35 @@ public class Main {
                             "logat!\n--------------\nEnter command: \n- LOGIN: login username pin\n- EXIT: exit");
                 }
             }
+
+            if (command.equals("accounts")) {
+                List<AccountsModel> accountsModelList = service.getAccountsForLoggedUser();
+                if (accountsModelList.isEmpty()) {
+                    System.out.println("Utilizatorul curent nu are conturi deschise sau nu este logat.");
+                } else {
+                    System.out.println("--------------------------");
+                    System.out.println("Accounts for current user:");
+
+                    for (AccountsModel x : accountsModelList
+                    ) {
+                        System.out.println("Account Id: " + x.getId() + " - amount: " + x.getAmount() + " " + x.getCurrency());
+                    }
+                    System.out.println("--------------------------------------");
+                    System.out.println("Puteti realiza urmatoarele operatiuni:\n- add - adauga un cont nou\n- deposit" +
+                            " - depuneti bani\n- withdraw - eliberare " +
+                            "numerar\n- transfer - transfera bani dintr-un cont in altul (implica conversie)\n- " +
+                            "LOGOUT - logout username\n- " +
+                            "EXIT - enter 'exit' to leave app");
+                }
+            }
+            if (command.equals("deposit")) {
+                int accountId = scanner.nextInt();
+                double amount = scanner.nextDouble();
+                String currency = scanner.next();
+
+                service.accountDeposit(accountId, amount, currency);
+            }
+
         }
     }
 }
