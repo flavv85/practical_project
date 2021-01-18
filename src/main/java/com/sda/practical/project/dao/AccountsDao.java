@@ -31,6 +31,16 @@ public class AccountsDao {
         transaction.commit();
         session.close();
     }
+
+    public AccountsModel getAccountById (int id){
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("from AccountsModel u where u.uderID = '" + id +
+                "'");
+        AccountsModel returnedAccount = (AccountsModel) query.getSingleResult();
+        session.close();
+        return returnedAccount;
+    }
+
 }
 
 

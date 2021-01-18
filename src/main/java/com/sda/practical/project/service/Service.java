@@ -96,14 +96,24 @@ public class Service {
         int id = usersModel.getId();
 
         AccountsModel accountsModel = new AccountsModel();
-        accountsModel.setUserId(id);
+//        accountsModel.setUserId(id);
+
+        int validateAccountId = accountsDao.getAccountById(id);
+
 
         accountsModel.setId(accountId);
         double currentAmount = accountsModel.getAmount();
         accountsModel.setAmount(currentAmount + amount);
         accountsModel.setCurrency(currency);
 
-        accountsDao.updateAccount(accountsModel);
+        if (id != validateAccountId) {
+            System.out.println("Ne pare rau. Contul selectat nu este valid sau apartine unei alte persoane.\nVa rugam" +
+                    " " +
+                    "reintroduceti comanda de depunere.");
+            System.out.println("id = " +id+"\nvalidateAccountId = "+validateAccountId);
+        } else {
+            accountsDao.updateAccount(accountsModel);
+        }
     }
 /*
 - de luat toate conturile utilizatorului curent cu metoda de mai sus (list accounts)
