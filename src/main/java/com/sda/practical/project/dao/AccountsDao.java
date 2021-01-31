@@ -24,7 +24,7 @@ public class AccountsDao {
         return accountsModelList;
     }
 
-    public void updateAccount(AccountsModel accountsModel) {
+    public void createAccount(AccountsModel accountsModel){
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.saveOrUpdate(accountsModel);
@@ -32,13 +32,12 @@ public class AccountsDao {
         session.close();
     }
 
-    public AccountsModel getAccountById (int id){
+    public void updateAccount(AccountsModel accountsModel) {
         Session session = sessionFactory.openSession();
-        Query query = session.createQuery("from AccountsModel u where u.uderID = '" + id +
-                "'");
-        AccountsModel returnedAccount = (AccountsModel) query.getSingleResult();
+        Transaction transaction = session.beginTransaction();
+        session.saveOrUpdate(accountsModel);
+        transaction.commit();
         session.close();
-        return returnedAccount;
     }
 
 }

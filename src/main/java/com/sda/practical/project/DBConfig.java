@@ -25,7 +25,7 @@ public class DBConfig {
         properties.put(Environment.USER, "root");
         properties.put(Environment.PASS, "12345");
         properties.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect"); // facultativ
-        properties.put(Environment.SHOW_SQL, true); // facultativ sa ne ajute sa vedem ca se executa query-ul
+        properties.put(Environment.SHOW_SQL, false); // facultativ sa ne ajute sa vedem ca se executa query-ul
 
         properties.put(Environment.HBM2DDL_AUTO, "update");
 

@@ -9,5 +9,7 @@ public class TransactionsModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
+    private int fromAccount;
+    private int toAccount;
+    private double amount;
 }
