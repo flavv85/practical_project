@@ -96,11 +96,24 @@ public class Main {
                 message1.menuAfterOperation();
             }
             // adaugare cont la user curent
-            if(command.equals("add")){
+            if (command.equals("add")) {
                 String currency = scanner.next();
                 currency = currency.toUpperCase();
                 service.newAccount(currency);
                 System.out.println("Contul a fost creat cu succes!\n");
+                message1.menuAfterOperation();
+            }
+            // stergere cont la user curent
+            if (command.equals("delete")) {
+                int accountId = scanner.nextInt();
+                scanner.nextLine();
+                System.out.println("Sunteti sigur ca doriti sa stergeti contul selectat [y/n] ?");
+                String confirmDelete = scanner.nextLine();
+                if (confirmDelete.equals("y") || confirmDelete.equals("Y")) {
+                    service.deleteAccount(accountId);
+                } else {
+                    System.out.println("Nu s-au efectuat modificari!");
+                }
                 message1.menuAfterOperation();
             }
         }

@@ -169,4 +169,23 @@ public class Service {
 
         accountsDao.createAccount(accountsModel);
     }
+
+    // delete account
+    public void deleteAccount(int accountId) {
+        UsersModel usersModel = usersDao.getUserByUserName(currentUser);
+        int currentId = usersModel.getId();
+        usersModel.setId(currentId);
+
+        AccountsModel accountsModel = new AccountsModel();
+        double sumInAccount = accountsModel.getAmount();
+        System.out.println(sumInAccount);
+        if (sumInAccount == 0) {
+            accountsDao.deleteAccount(accountId);
+            System.out.println("Contul a fost sters cu succes!");
+
+        } else {
+            System.out.println("Mai aveti fonduri disponibile in contul selectat. Retrageti sumele existente si " +
+                    "incercati din nou.\nUtilizati comanda: withdraw accountId amount.\n");
+        }
+    }
 }

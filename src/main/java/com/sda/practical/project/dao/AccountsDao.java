@@ -39,6 +39,14 @@ public class AccountsDao {
         transaction.commit();
         session.close();
     }
+    public void deleteAccount(int accountId){
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        AccountsModel accountsModel = session.find(AccountsModel.class, accountId);
+        session.delete(accountsModel);
+        transaction.commit();
+        session.close();
+    }
 
 }
 
